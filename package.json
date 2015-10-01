@@ -2,7 +2,7 @@
   "name": "jade-doc-html",
   "version": "0.1.0",
   "description": "Jade documentation output html",
-  "main": "index.js",
+  "main": "cli.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,8 +13,10 @@
   "keywords": [
     "jade",
     "jade-doc",
+    "docs",
     "documentation"
   ],
+  "cli": "cli.js",
   "author": "Arjen Scherff-de Water",
   "license": "MIT",
   "bugs": {
