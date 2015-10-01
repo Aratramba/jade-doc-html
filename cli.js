@@ -38,7 +38,7 @@ var write = fs.createWriteStream(cli.flags.output);
 /**
  * Read template file
  */
-var template = fs.createReadStream(__dirname +'template.html');
+var template = fs.createReadStream(__dirname +'/template.html');
 var templateHtml;
 
 template.on('data', function(data){
