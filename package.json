@@ -1,6 +1,6 @@
 {
   "name": "jade-doc-html",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Jade documentation output html",
   "main": "cli.js",
   "scripts": {
@@ -16,7 +16,7 @@
     "docs",
     "documentation"
   ],
-  "cli": "cli.js",
+  "bin": "cli.js",
   "author": "Arjen Scherff-de Water",
   "license": "MIT",
   "bugs": {
