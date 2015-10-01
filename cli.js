@@ -15,7 +15,10 @@ var path = require('path');
 var cli = meow({
   help: [
     'Usage',
-    '  $ jade-doc --input file.jade | jade-doc-html file.html',
+    '  $ jade-doc --input file.jade | jade-doc-html --output file.html',
+    '',
+    'Options',
+    '  --output    Set output html file',
   ]
 });
 
@@ -24,12 +27,12 @@ var cli = meow({
  * Create output file
  */
 
-if(typeof cli.input[0] === 'undefined'){
+if(typeof cli.flags.output === 'undefined'){
   throw new Error('Jade doc HTML requires --output to be set.');
 }
 
-mkdirp.sync(path.dirname(cli.input[0]));
-var write = fs.createWriteStream(cli.input[0]);
+mkdirp.sync(path.dirname(cli.flags.output));
+var write = fs.createWriteStream(cli.flags.output);
 
 
 /**
