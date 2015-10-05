@@ -5,8 +5,11 @@ Generates HTML output from a [Jade-doc](http://github.com/Aratramba/jade-doc/) s
 
 ### Command Line
 ```bash
+jade-doc-html --input jade-doc.json --output output.html
+```
+
+```bash
 jade-doc input.jade | jade-doc-html --output output.html
-jade-doc input.jade | jade-doc-html --output output.html --input jade-doc.json
 ```
 
 
