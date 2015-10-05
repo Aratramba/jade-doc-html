@@ -1,10 +1,10 @@
 {
   "name": "jade-doc-html",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Jade documentation output html",
-  "main": "cli.js",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "tape test/*.js | faucet"
   },
   "repository": {
     "type": "git",
@@ -27,6 +27,11 @@
     "meow": "^3.3.0",
     "mkdirp": "^0.5.1",
     "object-array-converter": "^0.1.0",
+    "object-assign": "^4.0.1",
     "pretty": "^1.0.0"
+  },
+  "devDependencies": {
+    "faucet": "0.0.1",
+    "tape": "^4.2.1"
   }
 }
