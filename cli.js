@@ -17,16 +17,7 @@ var cli = meow({
   ]
 });
 
-var jdh = new jadeDocHTML({ 
+process.stdin.pipe(new jadeDocHTML({ 
   input: cli.flags.input, 
   output: cli.flags.output 
-});
-
-
-if(!cli.flags.output){
-  process.stdin.pipe(jdh).pipe(process.stdout);
-
-  jdh.on('end', function(){
-    process.exit();
-  });
-}
+}));

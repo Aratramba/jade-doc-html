@@ -69,12 +69,12 @@ function JadeDocHTML(options){
 
     // add variable to expose js object
     if(isInit){
-      this.push('[');
+      output.write('[');
     }
 
     // add trailing comma for all items but the first
     if(!isInit){
-      this.push(',');
+      output.write(',');
     }
 
     // create pretty html
@@ -86,7 +86,7 @@ function JadeDocHTML(options){
     }
 
     // push to stream
-    this.push(JSON.stringify(obj) +'\n');
+    output.write(JSON.stringify(obj) +'\n');
 
     if(isInit){
       isInit = false;
@@ -104,7 +104,7 @@ function JadeDocHTML(options){
   this._flush = function(done){
 
     // finish js array
-    this.push(']');
+    output.write(']');
 
     // finish template
     finish();
@@ -125,7 +125,7 @@ function JadeDocHTML(options){
 
 
   // if input option was set
-  if(options.input){
+  if(typeof options.input !== 'undefined'){
 
     // read input json
     var input = fs.createReadStream(__dirname +'/'+ options.input);
