@@ -128,7 +128,7 @@ function JadeDocHTML(options){
         output.write(snippet);
 
         // push to output
-        stream.push(data);
+        stream.push(snippet);
       });
 
       // write final piece of html
