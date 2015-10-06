@@ -1,11 +1,13 @@
 'use strict';
 /* global module, require, __dirname */
 
-var obj2arr = require('object-array-converter');
-var through2 = require('through2');
+var isEmptyObject = require('is-empty-object');
 var assign = require('object-assign');
+var through2 = require('through2');
+var traverse = require('traverse');
 var pretty = require('pretty');
 var mkdirp = require('mkdirp');
+var marked = require('marked');
 var path = require('path');
 var fs = require('fs');
 
@@ -72,10 +74,47 @@ function JadeDocHTML(options){
     // create pretty html
     obj.output = pretty(obj.output);
 
-    // create array of arguments instead of object
-    if(obj.meta.arguments){
-      obj.meta.arguments = obj2arr.toArray(obj.meta.arguments);
-    }
+    obj.name = obj.meta.name;
+    obj.description = obj.meta.description;
+    // obj.arguments = tableify(obj.meta.arguments);
+
+    delete obj.meta.name;
+    delete obj.meta.description;
+    // delete obj.meta.arguments;
+
+    // traverse all arguments
+    // and indent according to level
+    var spaces;
+    var arg;
+    var rest = '';
+
+    traverse(obj.meta).forEach(function(x){
+
+      // check for empty object
+      if(isEmptyObject(x)){
+        return;
+      }
+
+      if(typeof this.key === 'undefined'){
+        return;
+      }
+
+      // set indentation
+      spaces = new Array(this.level).join('\t');
+      arg = [];
+      arg.push(spaces);
+      arg.push('* ');
+      arg.push(this.key);
+
+      if(typeof x !== 'object'){
+        arg.push(': ');
+        arg.push(x);
+      }
+
+      rest += arg.join('') +'\n';
+    });
+
+    obj.rest = marked(rest);
 
     if(isInit){
       isInit = false;
@@ -120,6 +159,9 @@ function JadeDocHTML(options){
 
       var snippet;
       json.forEach(function(obj){
+        
+        // push to output
+        stream.push(JSON.stringify(obj));
 
         // create code snippet
         snippet = createSnippet(obj);
@@ -127,8 +169,6 @@ function JadeDocHTML(options){
         // append json data to template
         output.write(snippet);
 
-        // push to output
-        stream.push(snippet);
       });
 
       // write final piece of html

@@ -1,6 +1,6 @@
 {
   "name": "jade-doc-html",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "description": "Jade documentation output html",
   "main": "index.js",
   "scripts": {
@@ -24,12 +24,15 @@
   },
   "homepage": "https://github.com/Aratramba/jade-doc-html#readme",
   "dependencies": {
+    "is-empty-object": "^1.1.1",
+    "marked": "^0.3.5",
     "meow": "^3.3.0",
     "mkdirp": "^0.5.1",
-    "object-array-converter": "^0.1.0",
     "object-assign": "^4.0.1",
     "pretty": "^1.0.0",
-    "through2": "^2.0.0"
+    "tableify": "0.0.10",
+    "through2": "^2.0.0",
+    "traverse": "^0.6.6"
   },
   "devDependencies": {
     "faucet": "0.0.1",

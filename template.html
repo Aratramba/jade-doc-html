@@ -48,22 +48,34 @@
 
     .doc-item__file{
       font-size: 10px;
-      background-color: #f9f9f9;
       padding: 2px;
       display: inline-block;
     }
 
-    .doc-item__arguments-title{
+    .doc-item__meta-title{
       font-size: 12px;
       margin-top: 20px;
     }
 
-    .doc-item__arguments{
+    .doc-item__meta{
+      font-size: 11px;
+    }
+
+    .doc-item__meta ul{
       margin: 0;
       padding: 0;
       list-style-position: inside;
-      font-size: 11px;
     }
+
+    .doc-item__meta ul ul{
+      margin-left: 15px;
+      margin-top: 5px;
+    }
+
+    .doc-item__meta li{
+      margin-bottom: 5px;
+    }
+
 
 
     /**
@@ -116,18 +128,22 @@
   <!-- doc item template -->
   <div id="template" style="display: none;">
     <div class="doc-item" id="doc-{{uniqueDocId}}">
-      {{#meta.name.length}}<h2 class="doc-item__title">{{meta.name}}</h2>{{/meta.name.length}}
-      {{#meta.description.length}}<p class="doc-item__description">{{meta.description}}</p>{{/meta.description.length}}
+      {{#name.length}}
+        <h2 class="doc-item__title">{{name}}</h2>
+      {{/name.length}}
+
+      {{#description.length}}
+        <p class="doc-item__description">{{description}}</p>
+      {{/description.length}}
+
       <p class="doc-item__file">{{file}}</p>
 
-      {{#meta.arguments.length}}
-        <h3 class="doc-item__arguments-title">Mixin arguments</h3>
-        <ul class="doc-item__arguments">
-        {{#meta.arguments}}
-          <li>{{key}}: {{value}}</li>
-        {{/meta.arguments}}
-        </ul>
-      {{/meta.arguments.length}}
+      {{#rest.length}}
+        <h3 class="doc-item__meta-title">Meta</h3>
+        <div class="doc-item__meta">
+        {{{rest}}}
+        </div>
+      {{/rest.length}}
 
       <div class="code">
         <div class="code__jade">
@@ -142,7 +158,7 @@
   </div>
   
   <!-- load data -->
-  <script>var data = [JADE_DOC_DATA];</script>
+  <script>window.DATA = [JADE_DOC_DATA];</script>
 
   <!-- render documentation -->
   <script>
@@ -160,8 +176,8 @@
     window.Prism.highlightAll();
   }
   
-  for(var obj in window.data){
-    display(window.data[obj]);
+  for(var obj in window.DATA){
+    display(window.DATA[obj]);
   }
 
   </script>
