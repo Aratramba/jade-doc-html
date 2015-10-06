@@ -38,7 +38,7 @@ function JadeDocHTML(options){
   mkdirp.sync(path.dirname(options.output));
   var output = fs.createWriteStream(options.output);
   output.on('close', function(){
-    stream.emit('end');
+    stream.emit('complete');
   }.bind(this));
 
 
@@ -132,10 +132,7 @@ function JadeDocHTML(options){
       });
 
       // write final piece of html
-      output.write(templateHtml[1]);
-
-      // end output file
-      output.end();
+      output.end(templateHtml[1]);
 
       // end stream
       stream.push(null);

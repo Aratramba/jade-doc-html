@@ -20,7 +20,7 @@ var jdh = new JadeDocHTML({
     input: 'data.json'
 });
 
-jdh.on('end', function(){
+jdh.on('complete', function(){
   console.log('complete');
 });
 ```

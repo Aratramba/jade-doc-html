@@ -19,7 +19,7 @@ test('test input / output', function(assert){
   };
 
   var stream = new JadeDocHTML(options);
-  stream.on('end', function(){
+  stream.on('complete', function(){
     var actual = fs.readFileSync(options.output).toString();
     var expected = fs.readFileSync('./test/fixtures/output.html').toString();
     assert.equal(actual, expected, 'output html should be equal to fixture html.');

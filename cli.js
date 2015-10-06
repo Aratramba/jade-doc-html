@@ -25,6 +25,6 @@ var jdh = new JadeDocHTML({
 
 process.stdin.pipe(jdh).pipe(process.stdout);
 
-jdh.on('end', function(){
+jdh.on('complete', function(){
   process.exit();
 });
