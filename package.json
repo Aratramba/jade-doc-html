@@ -1,6 +1,6 @@
 {
   "name": "jade-doc-html",
-  "version": "0.7.0",
+  "version": "0.9.0",
   "description": "Jade documentation output html",
   "main": "index.js",
   "scripts": {
@@ -28,7 +28,8 @@
     "mkdirp": "^0.5.1",
     "object-array-converter": "^0.1.0",
     "object-assign": "^4.0.1",
-    "pretty": "^1.0.0"
+    "pretty": "^1.0.0",
+    "through2": "^2.0.0"
   },
   "devDependencies": {
     "faucet": "0.0.1",

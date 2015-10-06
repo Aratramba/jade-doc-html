@@ -4,12 +4,13 @@
 
 
 var meow = require('meow');
-var jadeDocHTML = require('./index');
+var JadeDocHTML = require('.');
 
 var cli = meow({
   help: [
     'Usage',
     '  $ jade-doc --input file.jade | jade-doc-html --output file.html',
+    '  $ jade-doc-html --input file.json --output file.html',
     '',
     'Options',
     '  --output    Set output html file',
@@ -17,7 +18,13 @@ var cli = meow({
   ]
 });
 
-process.stdin.pipe(new jadeDocHTML({ 
+var jdh = new JadeDocHTML({
   input: cli.flags.input, 
   output: cli.flags.output 
-}));
+});
+
+process.stdin.pipe(jdh).pipe(process.stdout);
+
+jdh.on('end', function(){
+  process.exit();
+});

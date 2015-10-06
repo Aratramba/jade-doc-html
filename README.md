@@ -15,12 +15,12 @@ jade-doc input.jade | jade-doc-html --output output.html
 
 ### Node
 ```js
-var jadeDocHtml = new JadeDocHTML({
+var jdh = new JadeDocHTML({
     output: 'output.html',
     input: 'data.json'
 });
 
-jadeDocHtml.on('end', function(){
+jdh.on('end', function(){
   console.log('complete');
 });
 ```

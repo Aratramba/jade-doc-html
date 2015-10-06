@@ -2,8 +2,7 @@
 /* global module, require, __dirname */
 
 var obj2arr = require('object-array-converter');
-var Transform = require('stream').Transform;
-var inherits = require('util').inherits;
+var through2 = require('through2');
 var assign = require('object-assign');
 var pretty = require('pretty');
 var mkdirp = require('mkdirp');
@@ -18,14 +17,13 @@ var fs = require('fs');
  */
 
 function JadeDocHTML(options){
-  Transform.call(this);
 
   if(typeof options === 'undefined'){
-    throw new Error('Jade doc requires a settings object.');
+    throw new Error('Jade doc html requires a settings object.');
   }
 
   if(typeof options.output === 'undefined'){
-    throw new Error('Jade doc requires settings.output to be set.');
+    throw new Error('Jade doc html requires settings.output to be set.');
   }
 
   // options
@@ -40,7 +38,7 @@ function JadeDocHTML(options){
   mkdirp.sync(path.dirname(options.output));
   var output = fs.createWriteStream(options.output);
   output.on('close', function(){
-    this.emit('end');
+    stream.emit('end');
   }.bind(this));
 
 
@@ -59,22 +57,16 @@ function JadeDocHTML(options){
 
 
   /**
-   * Transform Jade Doc stream
-   * add comma's and [ to stream data
+   * Create js object to be placed inside html file
    */
   
-  this._transform = function(data, enc, done){
+  function createSnippet(obj){
 
-    var obj = JSON.parse(data);
-
-    // add variable to expose js object
-    if(isInit){
-      output.write('[');
-    }
+    var line = [];
 
     // add trailing comma for all items but the first
     if(!isInit){
-      output.write(',');
+      line.push(',');
     }
 
     // create pretty html
@@ -85,63 +77,73 @@ function JadeDocHTML(options){
       obj.meta.arguments = obj2arr.toArray(obj.meta.arguments);
     }
 
-    // push to stream
-    output.write(JSON.stringify(obj) +'\n');
-
     if(isInit){
       isInit = false;
     }
 
-    done();
-  };
+    line.push(JSON.stringify(obj));
 
-
-  /**
-   * End of Jade Doc stream
-   * append [ 
-   */
-  
-  this._flush = function(done){
-
-    // finish js array
-    output.write(']');
-
-    // finish template
-    finish();
-
-    // call transform done
-    done();
-  };
-
-
-  /**
-   * Finish template
-   * add last part of template html
-   */
-
-  function finish(){
-    output.end(templateHtml[1]);
+    return line.join('');
+    
   }
 
 
-  // if input option was set
+  /**
+   * Output stream
+   */
+
+  var stream = through2(function(chunk, enc, next){
+
+    // create code snippet
+    var snippet = createSnippet(JSON.parse(chunk));
+
+    // push lines
+    output.write(snippet);
+
+    // push stream
+    this.push(chunk);
+    next();
+  });
+
+
+  /**
+   * Input from file
+   */
+  
   if(typeof options.input !== 'undefined'){
 
     // read input json
     var input = fs.createReadStream(__dirname +'/'+ options.input);
     input.on('data', function(data){
 
-      // append json data to template
-      output.write(data.toString());
+      var json = JSON.parse(data.toString());
 
-      // finish template
-      finish.call(this);
+      var snippet;
+      json.forEach(function(obj){
+
+        // create code snippet
+        snippet = createSnippet(obj);
+
+        // append json data to template
+        output.write(snippet);
+
+        // push to output
+        stream.push(snippet);
+      });
+
+      // write final piece of html
+      output.write(templateHtml[1]);
+
+      // end output file
+      output.end();
+
+      // end stream
+      stream.push(null);
+      
     }.bind(this));
   }
-  
-  return this;
-}
 
-inherits(JadeDocHTML, Transform);
+  return stream;
+}
 
 module.exports = JadeDocHTML;
