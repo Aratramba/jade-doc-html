@@ -76,11 +76,9 @@ function JadeDocHTML(options){
 
     obj.name = obj.meta.name;
     obj.description = obj.meta.description;
-    // obj.arguments = tableify(obj.meta.arguments);
 
     delete obj.meta.name;
     delete obj.meta.description;
-    // delete obj.meta.arguments;
 
     // traverse all arguments
     // and indent according to level
