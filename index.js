@@ -76,9 +76,11 @@ function JadeDocHTML(options){
 
     obj.name = obj.meta.name;
     obj.description = obj.meta.description;
+    // obj.arguments = tableify(obj.meta.arguments);
 
     delete obj.meta.name;
     delete obj.meta.description;
+    // delete obj.meta.arguments;
 
     // traverse all arguments
     // and indent according to level
@@ -140,6 +142,11 @@ function JadeDocHTML(options){
     // push stream
     this.push(chunk);
     next();
+  }, function(cb){
+
+    // write final piece of html
+    output.end(templateHtml[1]);
+    cb();
   });
 
 
@@ -169,11 +176,9 @@ function JadeDocHTML(options){
 
       });
 
-      // write final piece of html
-      output.end(templateHtml[1]);
-
       // end stream
       stream.push(null);
+      stream.end();
       
     }.bind(this));
   }
