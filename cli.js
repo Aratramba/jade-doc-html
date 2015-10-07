@@ -4,7 +4,7 @@
 
 
 var meow = require('meow');
-var JadeDocHTML = require('.');
+var JadeDocHTML = require('./index');
 
 var cli = meow({
   help: [
