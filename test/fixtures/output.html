@@ -158,7 +158,7 @@
   </div>
   
   <!-- load data -->
-  <script>window.DATA = [{"meta":{},"file":"test/fixtures/test.jade","source":"div.foo","output":"<div class=\"foo\"></div>","name":"foo","rest":""},{"meta":{},"file":"test/fixtures/test.jade","source":"div.faa","output":"<div class=\"faa\"></div>","name":"faa","rest":""},{"meta":{"arguments":{"one":"hello","two":"world"},"foo":"faa","beep":"boop","list":"foo faa"},"file":"test/fixtures/test.jade","source":"mixin foo(one, two)\n  p #{one}\n  p #{two}","output":"<p>hello</p>\n<p>world</p>","name":"mixin","description":"this is a mixin","rest":"<ul>\n<li>arguments<ul>\n<li>one: hello</li>\n<li>two: world</li>\n</ul>\n</li>\n<li>foo: faa</li>\n<li>beep: boop</li>\n<li>list: foo faa</li>\n</ul>\n"}];</script>
+  <script>window.DATA = [{"meta":{"name":"foo"},"file":"test/fixtures/test.jade","source":"div.foo","output":"<div class=\"foo\"></div>","name":"foo","rest":""},{"meta":{"name":"faa"},"file":"test/fixtures/test.jade","source":"div.faa","output":"<div class=\"faa\"></div>","name":"faa","rest":""},{"meta":{"name":"mixin","description":"this is a mixin","arguments":{"one":"hello","two":"world"},"foo":"faa","beep":"boop","list":"foo faa"},"file":"test/fixtures/test.jade","source":"mixin foo(one, two)\n  p #{one}\n  p #{two}","output":"<p>hello</p>\n<p>world</p>","name":"mixin","description":"this is a mixin","rest":"<ul>\n<li>arguments<ul>\n<li>one: hello</li>\n<li>two: world</li>\n</ul>\n</li>\n<li>foo: faa</li>\n<li>beep: boop</li>\n<li>list: foo faa</li>\n</ul>\n"}];</script>
 
   <!-- render documentation -->
   <script>
