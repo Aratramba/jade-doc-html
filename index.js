@@ -2,8 +2,8 @@
 /* global module, require, __dirname */
 
 var isEmptyObject = require('is-empty-object');
+var JSONStream = require('JSONStream');
 var assign = require('object-assign');
-var through2 = require('through2');
 var traverse = require('traverse');
 var pretty = require('pretty');
 var mkdirp = require('mkdirp');
@@ -131,22 +131,18 @@ function JadeDocHTML(options){
    * Output stream
    */
 
-  var stream = through2(function(chunk, enc, next){
-
+  var stream = JSONStream.parse('*');
+    stream.on('data', function(data){
+    
     // create code snippet
-    var snippet = createSnippet(JSON.parse(chunk));
+    var snippet = createSnippet(data);
 
     // push lines
     output.write(snippet);
+  });
 
-    // push stream
-    this.push(chunk);
-    next();
-  }, function(cb){
-
-    // write final piece of html
+  stream.on('end', function(){
     output.end(templateHtml[1]);
-    cb();
   });
 
 
@@ -164,9 +160,6 @@ function JadeDocHTML(options){
 
       var snippet;
       json.forEach(function(obj){
-        
-        // push to output
-        stream.push(JSON.stringify(obj));
 
         // create code snippet
         snippet = createSnippet(obj);

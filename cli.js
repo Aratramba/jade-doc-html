@@ -5,6 +5,7 @@
 
 var meow = require('meow');
 var JadeDocHTML = require('./index');
+var JSONStream = require('JSONStream');
 
 var cli = meow({
   help: [
@@ -23,7 +24,7 @@ var jdh = new JadeDocHTML({
   output: cli.flags.output 
 });
 
-process.stdin.pipe(jdh).pipe(process.stdout);
+process.stdin.pipe(jdh).pipe(JSONStream.stringify()).pipe(process.stdout);
 
 jdh.on('complete', function(){
   process.exit();
