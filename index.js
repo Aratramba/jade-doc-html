@@ -71,6 +71,8 @@ function JadeDocHTML(options){
       line.push(',');
     }
 
+    obj = Object.create(obj);
+
     // create pretty html
     obj.output = pretty(obj.output);
 
