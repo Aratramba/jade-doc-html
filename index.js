@@ -71,7 +71,7 @@ function JadeDocHTML(options){
       line.push(',');
     }
 
-    obj = Object.create(obj);
+    obj = JSON.parse(JSON.stringify(obj));
 
     // create pretty html
     obj.output = pretty(obj.output);
