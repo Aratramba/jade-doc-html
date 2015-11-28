@@ -45,7 +45,7 @@ function JadeDocHTML(options){
   
 
   assets();
-  return;
+
   // console.log(html.toString());
 
 
