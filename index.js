@@ -1,15 +1,16 @@
 'use strict';
-/* global module, require, __dirname */
+/* global module, require, process, __dirname */
 
-var isEmptyObject = require('is-empty-object');
 var JSONStream = require('JSONStream');
+var browserify = require('browserify')
 var assign = require('object-assign');
-var traverse = require('traverse');
-var pretty = require('pretty');
 var mkdirp = require('mkdirp');
-var marked = require('marked');
 var path = require('path');
 var fs = require('fs');
+
+var snippet = require('./lib/snippet');
+var inputFile = require('./lib/input');
+var assets = require('./lib/assets');
 
 
 
@@ -34,120 +35,31 @@ function JadeDocHTML(options){
     output: null
   }, options);
 
-  var isInit = true;
-
   // create output stream
-  mkdirp.sync(path.dirname(options.output));
-  var output = fs.createWriteStream(options.output);
-  output.on('close', function(){
-    stream.emit('complete');
-  }.bind(this));
-
-
-  // read template html file
-  var template = fs.createReadStream(__dirname +'/template.html');
-  var templateHtml;
-
-  template.on('data', function(data){
-    // break template file up in 2 parts
-    templateHtml = data.toString().split('JADE_DOC_DATA');
-
-    // add first part of template html
-    output.write(templateHtml[0]);
-  });
-
-
-
-  /**
-   * Create js object to be placed inside html file
-   */
+  // mkdirp.sync(path.dirname(options.output));
+  // var outFile = fs.createWriteStream(options.output);
+  // outFile.on('close', function(){
+  //   stdout.emit('complete');
+  // }.bind(this));
+  // 
   
-  function createSnippet(obj){
 
-    var line = [];
-
-    // add trailing comma for all items but the first
-    if(!isInit){
-      line.push(',');
-    }
-
-    obj = JSON.parse(JSON.stringify(obj));
-
-    // create pretty html
-    obj.output = pretty(obj.output);
-
-    obj.name = obj.meta.name;
-    obj.description = obj.meta.description;
-
-    // traverse all arguments
-    // and indent according to level
-    var spaces;
-    var arg;
-    var rest = '';
-
-    traverse(obj.meta).forEach(function(x){
-
-      // check for empty object
-      if(isEmptyObject(x)){
-        return;
-      }
-
-      if(this.key === 'name'){
-        return;
-      }
-
-      if(this.key === 'description'){
-        return;
-      }
-
-      if(typeof this.key === 'undefined'){
-        return;
-      }
-
-      // set indentation
-      spaces = new Array(this.level).join('\t');
-      arg = [];
-      arg.push(spaces);
-      arg.push('* ');
-      arg.push(this.key);
-
-      if(typeof x !== 'object'){
-        arg.push(': ');
-        arg.push(x);
-      }
-
-      rest += arg.join('') +'\n';
-    });
-
-    obj.rest = marked(rest);
-
-    if(isInit){
-      isInit = false;
-    }
-
-    line.push(JSON.stringify(obj));
-
-    return line.join('');
-    
-  }
+  assets();
+  return;
+  // console.log(html.toString());
 
 
   /**
    * Output stream
    */
 
-  var stream = JSONStream.parse('*');
-    stream.on('data', function(data){
-    
-    // create code snippet
-    var snippet = createSnippet(data);
-
-    // push lines
-    output.write(snippet);
+  var stdout = JSONStream.parse('*');
+  stdout.on('data', function(data){
+    // outFile.write(snippet.create(data));
   });
 
-  stream.on('end', function(){
-    output.end(templateHtml[1]);
+  stdout.on('end', function(){
+    // outFile.end(html[1]);
   });
 
 
@@ -156,32 +68,10 @@ function JadeDocHTML(options){
    */
   
   if(typeof options.input !== 'undefined'){
-
-    // read input json
-    var input = fs.createReadStream(__dirname +'/'+ options.input);
-    input.on('data', function(data){
-
-      var json = JSON.parse(data.toString());
-
-      var snippet;
-      json.forEach(function(obj){
-
-        // create code snippet
-        snippet = createSnippet(obj);
-
-        // append json data to template
-        output.write(snippet);
-
-      });
-
-      // end stream
-      stream.push(null);
-      stream.end();
-      
-    }.bind(this));
+    // inputFile(options.input, outFile, stdout);
   }
 
-  return stream;
+  return stdout;
 }
 
 module.exports = JadeDocHTML;

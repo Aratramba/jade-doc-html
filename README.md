@@ -5,19 +5,19 @@ Generates HTML output from a [Jade-doc](http://github.com/Aratramba/jade-doc/) s
 
 ### Command Line
 ```bash
-jade-doc-html --input jade-doc.json --output output.html
+jade-doc-html --input jade-doc.json --output output/
 ```
 
 ```bash
-jade-doc input.jade | jade-doc-html --output output.html
+jade-doc input.jade | jade-doc-html --output output/
 ```
 
 
 ### Node
 ```js
 var jdh = new JadeDocHTML({
-    output: 'output.html',
-    input: 'data.json'
+    output: 'output/',
+    input: '/path/to/data.json'
 });
 
 jdh.on('complete', function(){

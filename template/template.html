@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Jade Documentation</title>
+  <style id="syntax-highlight"></style>
+  <style id="styles"></style>
+</head>
+<body>
+
+  <div class="container">
+    <h1 class="page-title">Jade Documentation</h1>
+  </div>
+
+
+  <!-- doc item template -->
+  <script id="doc-item-template" style="display: none;">
+    <div class="doc-item" id="doc-{{uniqueDocId}}">
+      {{#name.length}}
+        <h2 class="doc-item__title">{{name}}</h2>
+      {{/name.length}}
+
+      {{#description.length}}
+        <p class="doc-item__description">{{description}}</p>
+      {{/description.length}}
+
+      <p class="doc-item__file">{{file}}</p>
+
+      {{#rest.length}}
+        <h3 class="doc-item__meta-title">Meta</h3>
+        <div class="doc-item__meta">
+        {{{rest}}}
+        </div>
+      {{/rest.length}}
+
+      <div class="code">
+        <div class="code__jade">
+          <pre class="language-jade"><code>{{source}}</code></pre>
+        </div>
+
+        <div class="code__html">
+          <pre class="language-html"><code>{{output}}</code></pre>
+        </div>
+      </div>
+    </div>
+  </script>
+  
+  <script id="data"></script>
+  <script id="app"></script>
+</body>
+</html>

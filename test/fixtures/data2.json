@@ -1,0 +1,13 @@
+[
+{"meta":{"name":"extends","locals":{"foo":"foo"}},"file":"test/fixtures/extends.jade","source":"extends tag.jade","output":"<div class=\"some-tag\">this is some tag foo</div><div class=\"some-other-tag\">this is some other tag</div>"}
+,
+{"meta":{"name":"foo"},"file":"test/fixtures/multiple.jade","source":"p foo","output":"<p>foo</p>"}
+,
+{"meta":{},"file":"test/fixtures/multiple.jade","source":"p faa","output":"<p>faa</p>"}
+,
+{"meta":{"name":"some-tag","locals":{"foo":"foo"}},"file":"test/fixtures/tag.jade","source":"div.some-tag\n  | this is some tag #{foo}","output":"<div class=\"some-tag\">this is some tag foo</div>"}
+,
+{"meta":{"name":"inclusion tag","description":"this is an inclusion tag"},"file":"test/fixtures/include.jade","source":"div\n  include mixins.jade\n  +mixin2('foo', 'faa')","output":"<div><div>this is a mixin foo</div><div>this is the same mixin faa</div></div>"}
+,
+{"meta":{"name":"mixin","description":"this is jade mixin documentation","arguments":[{"name":"arg1","description":"this is arg1","type":"string","default":null,"nullable":false,"optional":false,"original":"{string} arg1 - this is arg1"},{"name":"arg2","description":"this is arg2","type":"string","default":null,"nullable":false,"optional":false,"original":"{string} arg2 - this is arg2"}],"attributes":[{"name":"attr1","description":"this is attr1","type":"string","default":null,"nullable":false,"optional":false,"original":"{string} attr1 - this is attr1"},{"name":"attr2","description":"this is attr2","type":"string","default":null,"nullable":false,"optional":false,"original":"{string} attr2 - this is attr2"},{"name":"data-attr3","description":"this is attr3","type":"string","default":null,"nullable":false,"optional":false,"original":"{string} data-attr3 - this is attr3"}],"examples":["+mixin2('foo', 'faa') // mixin example description","+mixin2('faa', 'foo')"]},"file":"test/fixtures/mixins.jade","source":"mixin mixin2(arg1, arg2)\n  div this is a mixin #{arg1}\n  div this is the same mixin #{arg2}","output":"<div>this is a mixin foo</div><div>this is the same mixin faa</div><div>this is a mixin faa</div><div>this is the same mixin foo</div>"}
+]
