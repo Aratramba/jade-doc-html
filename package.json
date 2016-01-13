@@ -1,6 +1,6 @@
 {
   "name": "pug-doc-html",
-  "version": "0.16.0",
+  "version": "1.0.0",
   "description": "Pug (Jade) documentation output html",
   "main": "index.js",
   "scripts": {

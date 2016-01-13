@@ -2,7 +2,7 @@
 /* global require */
 
 var test = require('tape');
-var JadeDocHTML = require('../');
+var PugDocHTML = require('../');
 var fs = require('fs');
 
 
@@ -18,7 +18,7 @@ test('test input / output', function(assert){
     input: './test/fixtures/data.json'
   };
 
-  var stream = new JadeDocHTML(options);
+  var stream = new PugDocHTML(options);
   stream.on('complete', function(){
     var actual = fs.readFileSync(options.output).toString();
     var expected = fs.readFileSync('./test/fixtures/output.html').toString();

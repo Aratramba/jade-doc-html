@@ -1,26 +1,26 @@
-# Jade-doc HTML
+# Pug-doc HTML
 
-Generates HTML output from a [Jade-doc](http://github.com/Aratramba/jade-doc/) stream or input jade-doc json.
+Generates HTML output from a [Pug-doc](http://github.com/Aratramba/pug-doc/) stream or input pug-doc json.
 
 
 ### Command Line
 ```bash
-jade-doc-html --input jade-doc.json --output output.html
+pug-doc-html --input pug-doc.json --output output.html
 ```
 
 ```bash
-jade-doc input.jade | jade-doc-html --output output.html
+pug-doc input.jade | pug-doc-html --output output.html
 ```
 
 
 ### Node
 ```js
-var jdh = new JadeDocHTML({
+var stream = new PugDocHTML({
     output: 'output.html',
     input: 'data.json'
 });
 
-jdh.on('complete', function(){
+stream.on('complete', function(){
   console.log('complete');
 });
 ```

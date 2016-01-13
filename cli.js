@@ -4,14 +4,14 @@
 
 
 var meow = require('meow');
-var JadeDocHTML = require('./index');
+var PugDocHTML = require('./index');
 var JSONStream = require('JSONStream');
 
 var cli = meow({
   help: [
     'Usage',
-    '  $ jade-doc --input file.jade | jade-doc-html --output file.html',
-    '  $ jade-doc-html --input file.json --output file.html',
+    '  $ pug-doc --input file.jade | pug-doc-html --output file.html',
+    '  $ pug-doc-html --input file.json --output file.html',
     '',
     'Options',
     '  --output    Set output html file',
@@ -19,7 +19,7 @@ var cli = meow({
   ]
 });
 
-var jdh = new JadeDocHTML({
+var jdh = new PugDocHTML({
   input: cli.flags.input, 
   output: cli.flags.output 
 });

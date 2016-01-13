@@ -14,18 +14,18 @@ var fs = require('fs');
 
 
 /**
- * Takes the jade-doc stream 
+ * Takes the pug-doc stream 
  * and generates a pretty html file.
  */
 
-function JadeDocHTML(options){
+function PugDocHTML(options){
 
   if(typeof options === 'undefined'){
-    throw new Error('Jade doc html requires a settings object.');
+    throw new Error('Pug doc html requires a settings object.');
   }
 
   if(typeof options.output === 'undefined'){
-    throw new Error('Jade doc html requires settings.output to be set.');
+    throw new Error('Pug doc html requires settings.output to be set.');
   }
 
   // options
@@ -50,7 +50,7 @@ function JadeDocHTML(options){
 
   template.on('data', function(data){
     // break template file up in 2 parts
-    templateHtml = data.toString().split('JADE_DOC_DATA');
+    templateHtml = data.toString().split('PUG_DOC_DATA');
 
     // add first part of template html
     output.write(templateHtml[0]);
@@ -184,4 +184,4 @@ function JadeDocHTML(options){
   return stream;
 }
 
-module.exports = JadeDocHTML;
+module.exports = PugDocHTML;
