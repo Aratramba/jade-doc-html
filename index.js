@@ -159,9 +159,14 @@ function PugDocHTML(options){
 
     // read input json
     var input = fs.createReadStream(__dirname +'/'+ options.input);
-    input.on('data', function(data){
+    var json = '';
 
-      var json = JSON.parse(data.toString());
+    input.on('data', function(data){
+      json += data;
+    }.bind(this));
+
+    input.on('end', function() {
+      json = JSON.parse(json.toString());
 
       var snippet;
       json.forEach(function(obj){
@@ -177,8 +182,7 @@ function PugDocHTML(options){
       // end stream
       stream.push(null);
       stream.end();
-      
-    }.bind(this));
+    });
   }
 
   return stream;

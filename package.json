@@ -4,7 +4,7 @@
   "description": "Pug (Jade) documentation output html",
   "main": "index.js",
   "scripts": {
-    "test": "tape test/*.js | faucet"
+    "test": "tape test/test.js | faucet"
   },
   "repository": {
     "type": "git",
